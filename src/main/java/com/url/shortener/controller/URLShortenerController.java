@@ -25,10 +25,11 @@ public class URLShortenerController {
 	public ResponseEntity<URLResponse> addShortURL(@RequestBody URLRequest urlRequest) {
 		URLResponse urlResponse;
 		urlResponse = urlshortenerService.addShortURL(urlRequest);
+		System.out.println("Got HTTP request: "+urlResponse.toString());
 		return new ResponseEntity<>(urlResponse,HttpStatus.OK);
 	}
 	
-	@GetMapping("/{urlKey}")
+	@GetMapping("/st/{urlKey}")
 	public ResponseEntity<String> getRedirectionUrl(@PathVariable String urlKey){
 		ShortURL shortUrl = urlshortenerService.getRedirectionUrl(urlKey);
 		System.out.println("got request: "+ shortUrl);

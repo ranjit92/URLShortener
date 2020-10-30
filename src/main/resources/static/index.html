@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<title>URL Shortener</title>
+	<style>
+		body {
+			font-family: Arial;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		form.example input[type=text] {
+			padding: 10px;
+			font-size: 17px;
+			border: 1px solid grey;
+			float: left;
+			width: 80%;
+			background: #f1f1f1;
+		}
+
+		form.example button {
+			float: left;
+			width: 15%;
+			padding: 10px;
+			background: #2196F3;
+			color: white;
+			font-size: 17px;
+			border: 1px solid grey;
+			border-left: none;
+			cursor: pointer;
+		}
+
+		form.example button:hover {
+			background-color: #0b7dda;
+		}
+
+		form.example::after {
+			content: "";
+			clear: both;
+			display: table;
+		}
+
+		p {
+		
+			float: none;
+			font-size: 17px;
+			font-weight: bold;
+
+		}
+	</style>
+</head>
+
+<script>
+	const baseUrl = 'http://localhost:9867/addURL';
+
+	async function getInputValue() {
+		var inputVal = document.getElementById("urlinput").value;
+		const response = await fetch(baseUrl, {
+			method: 'POST', // *GET, POST, PUT, DELETE, etc.
+
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				orginalURL: inputVal
+			}) // body data type must match "Content-Type" header
+		});
+		//console.log("response json >> " + response.JSON);
+		const shortUrl = await response.json();
+		document.getElementById("urlplaceholder").innerHTML = shortUrl.shortURL;
+
+	}
+
+function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+
+
+</script>
+
+<body>
+	<h2>Enter a long URL to make short</h2>
+
+	<form class="example">
+		<input type="text" id="urlinput" placeholder="Example: www.google.com/image/ok.jpg">
+		<button type="button" onclick="getInputValue()">Make
+			short url</button>
+	</form>
+		<h4>Your short url here..</h4>
+
+
+	<form class="example">
+		<p id="urlplaceholder"></p>
+		<button type="button" onclick="copyToClipboard('#urlplaceholder')">Copy URL</button>
+	</form>
+
+	</head>
+
+	<body>
+
+
+	</body>
+
+</html>
