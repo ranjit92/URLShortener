@@ -31,7 +31,7 @@ public class URLShortenerController {
 		return new ResponseEntity<>(urlResponse,HttpStatus.OK);
 	}
 	
-	@GetMapping("/st/{urlKey}")
+	@GetMapping("/sl/{urlKey}")
 	public ResponseEntity<String> getRedirectionUrl(@PathVariable String urlKey){
 		ShortURL shortUrl = urlshortenerService.getRedirectionUrl(urlKey);
 		System.out.println("got request: "+ shortUrl);
